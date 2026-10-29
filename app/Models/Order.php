@@ -10,6 +10,12 @@ class Order extends Model
 {
     protected $fillable = ['customer_id', 'subtotal', 'tax', 'grand_total'];
 
+    protected $casts = [
+    'subtotal' => 'decimal:2',
+    'tax' => 'decimal:2',
+    'grand_total' => 'decimal:2',
+];
+
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
