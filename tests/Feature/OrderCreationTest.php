@@ -58,7 +58,7 @@ class OrderCreationTest extends TestCase
 
         $response->assertStatus(422);
 
-        // Stock maaraama irukkanum, order create aagakoodadhu
+        
         $this->assertEquals(2, $eggs->fresh()->stock);
         $this->assertDatabaseCount('orders', 0);
         Queue::assertNothingPushed();
@@ -76,7 +76,7 @@ class OrderCreationTest extends TestCase
             ['product_id' => $eggs->id, 'quantity' => 5],
         ]))->assertStatus(422);
 
-        // Milk valid-a irundhaalum, rollback aagi stock 10 appadiye irukkanum
+        
         $this->assertEquals(10, $milk->fresh()->stock);
         $this->assertDatabaseCount('orders', 0);
     }
@@ -87,7 +87,7 @@ class OrderCreationTest extends TestCase
 
         $bread = Product::factory()->create(['stock' => 4]);
 
-        // 3 + 2 = 5 > 4, so fail aaganum
+        // 3 + 2 = 5 > 4, 
         $this->postJson('/orders', $this->payload([
             ['product_id' => $bread->id, 'quantity' => 3],
             ['product_id' => $bread->id, 'quantity' => 2],

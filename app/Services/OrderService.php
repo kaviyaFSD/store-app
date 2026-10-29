@@ -19,14 +19,14 @@ class OrderService
                 ['name' => $data['name']]
             );
 
-            // Same product rendu thadava vandha quantity-ah serthukkom
+            
             $quantities = [];
             foreach ($data['items'] as $item) {
                 $id = $item['product_id'];
                 $quantities[$id] = ($quantities[$id] ?? 0) + $item['quantity'];
             }
 
-            // Rows-ah lock pannrom (concurrency safety)
+            
             $products = Product::whereIn('id', array_keys($quantities))
                 ->orderBy('id')
                 ->lockForUpdate()
